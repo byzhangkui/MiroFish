@@ -1,7 +1,7 @@
 # Multi-stage build for MiroFish Frontend
 
 # Build stage
-FROM node:18-alpine as builder
+FROM node:20-alpine as builder
 
 # Set working directory
 WORKDIR /app
