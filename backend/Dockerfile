@@ -8,10 +8,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uv package manager
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.cargo/bin:${PATH}"
-
 # Set working directory
 WORKDIR /app
 
@@ -19,8 +15,9 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 COPY requirements.txt ./
 
-# Install Python dependencies using uv
-RUN uv pip install --system -r requirements.txt
+# Install uv package manager and Python dependencies in one step
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    /root/.cargo/bin/uv pip install --system -r requirements.txt
 
 # Production stage
 FROM python:3.11-slim
