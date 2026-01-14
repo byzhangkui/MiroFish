@@ -15,9 +15,14 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 COPY requirements.txt ./
 
-# Install uv package manager and Python dependencies in one step
+# Install uv package manager and Python dependencies
+# Set longer timeout and use PyPI mirror for faster downloads
+ENV UV_HTTP_TIMEOUT=300
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    /root/.local/bin/uv pip install --system -r requirements.txt
+    /root/.local/bin/uv pip install --system \
+    --index-url https://pypi.tuna.tsinghua.edu.cn/simple \
+    --extra-index-url https://pypi.org/simple \
+    -r requirements.txt
 
 # Production stage
 FROM python:3.11-slim
