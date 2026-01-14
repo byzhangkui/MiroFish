@@ -17,7 +17,7 @@ COPY requirements.txt ./
 
 # Install uv package manager and Python dependencies in one step
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    /root/.cargo/bin/uv pip install --system -r requirements.txt
+    /root/.local/bin/uv pip install --system -r requirements.txt
 
 # Production stage
 FROM python:3.11-slim
