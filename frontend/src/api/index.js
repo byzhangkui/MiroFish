@@ -2,9 +2,10 @@ import axios from 'axios'
 
 // 创建axios实例
 const service = axios.create({
-  // 使用相对路径 /api，由 Nginx 反向代理到后端
+  // 使用空 baseURL，因为 API 路径已包含 /api 前缀（如 /api/graph/xxx）
+  // Nginx 会将 /api/* 请求代理到后端 backend:5001/api/*
   // 这样无论部署在哪里（localhost、内网、公网、域名）都能正常工作
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || '',
   timeout: 300000, // 5分钟超时（本体生成可能需要较长时间）
   headers: {
     'Content-Type': 'application/json'
